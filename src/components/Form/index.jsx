@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createSchema, updateSchema } from "../../schemas";
+import { FormStyled } from "./style";
 
 export const Form = ({ typeRequest, typeData, handleFunction }) => {
   const {
@@ -14,7 +15,7 @@ export const Form = ({ typeRequest, typeData, handleFunction }) => {
   });
 
   return (
-    <>
+    <FormStyled>
       <form onSubmit={handleSubmit(handleFunction)}>
         <h1>
           {typeRequest} {typeData}
@@ -53,6 +54,6 @@ export const Form = ({ typeRequest, typeData, handleFunction }) => {
         </fieldset>
         <button type="submit">{typeRequest}</button>
       </form>
-    </>
+    </FormStyled>
   );
 };

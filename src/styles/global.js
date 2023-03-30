@@ -51,6 +51,7 @@ export default createGlobalStyle`
         font-weight: 500;
         font-family: inherit;
         background-color: #1a1a1a;
+        color: white;
         cursor: pointer;
         transition: border-color 0.25s;
 
