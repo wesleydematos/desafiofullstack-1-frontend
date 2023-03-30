@@ -5,6 +5,10 @@ import { toast } from "react-toastify";
 export const CustomerContext = createContext({});
 
 export const CustomerProvider = ({ children }) => {
+  const [changeLi, setChangeLi] = useState(false);
+  const [customers, setCustomers] = useState([]);
+  const [customerId, setCustomerId] = useState("");
+
   async function registerCustomer(data) {
     try {
       await api.post("/customers", data);
@@ -16,7 +20,17 @@ export const CustomerProvider = ({ children }) => {
   }
 
   return (
-    <CustomerContext.Provider value={{ registerCustomer }}>
+    <CustomerContext.Provider
+      value={{
+        registerCustomer,
+        changeLi,
+        setChangeLi,
+        customers,
+        setCustomers,
+        customerId,
+        setCustomerId,
+      }}
+    >
       {children}
     </CustomerContext.Provider>
   );
