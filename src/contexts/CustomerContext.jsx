@@ -1,10 +1,24 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
+import api from "../services/api";
+import { toast } from "react-toastify";
 
-export const CustomerContext = createContext();
+export const CustomerContext = createContext({});
 
 export const CustomerProvider = ({ children }) => {
+  async function registerCustomer(data) {
+    try {
+      await api.post("/customers", data);
+      toast.success("Customer criado com sucesso!");
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    }
+  }
+
   return (
-    <CustomerContext.Provider value={{}}>{children}</CustomerContext.Provider>
+    <CustomerContext.Provider value={{ registerCustomer }}>
+      {children}
+    </CustomerContext.Provider>
   );
 };
 
