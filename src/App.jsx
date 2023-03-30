@@ -1,8 +1,16 @@
+import { ToastContainer } from "react-toastify";
+import { CustomerProvider } from "./contexts/customerContext";
+import "react-toastify/dist/ReactToastify.css";
+import Routes from "./routes";
+
 function App() {
   return (
-    <div className="App">
-      <p>hello</p>
-    </div>
+    <>
+      <ToastContainer theme="dark" />
+      <CustomerProvider>
+        <Routes />
+      </CustomerProvider>
+    </>
   );
 }
 
