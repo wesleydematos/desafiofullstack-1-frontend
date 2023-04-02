@@ -3,13 +3,13 @@ import { Form } from "../Form";
 import { ModalEditStyled } from "./style";
 
 export const ModalEdit = () => {
-  const { updateCustomer, setEditModal } = useCustomerContext();
+  const { updateCustomer } = useCustomerContext();
   return (
     <ModalEditStyled>
       <Form
         handleFunction={updateCustomer}
         typeRequest="Update"
-        typeData={"Customer"}
+        typeData="Customer"
       />
     </ModalEditStyled>
   );

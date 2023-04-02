@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Header } from "../../components/Header";
+import { ModalCreateContact } from "../../components/ModalCreateContact";
 import { ModalDelete } from "../../components/ModalDelete";
 import { ModalEdit } from "../../components/ModalEdit";
 import { useCustomerContext } from "../../contexts/customerContext";
@@ -18,6 +19,8 @@ export const Customers = () => {
     deleteCustomer,
     setEditModal,
     editModal,
+    createContactModal,
+    setCreateContactModal,
   } = useCustomerContext();
 
   useEffect(() => {
@@ -41,6 +44,8 @@ export const Customers = () => {
         />
       )}
       {editModal && <ModalEdit />}
+      {createContactModal && <ModalCreateContact />}
+
       <Header />
       <CustomersStyled>
         {!customers.length ? (
@@ -72,7 +77,14 @@ export const Customers = () => {
                   >
                     Delete
                   </button>
-                  <button>Create contact</button>
+                  <button
+                    onClick={() => {
+                      setCustomerId(customer.id);
+                      setCreateContactModal(!createContactModal);
+                    }}
+                  >
+                    Create contact
+                  </button>
                   <button>List contacts</button>
                 </div>
               </li>

@@ -10,6 +10,7 @@ export const CustomerProvider = ({ children }) => {
   const [customerId, setCustomerId] = useState("");
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const [createContactModal, setCreateContactModal] = useState(false);
 
   async function registerCustomer(data) {
     try {
@@ -45,6 +46,18 @@ export const CustomerProvider = ({ children }) => {
     }
   }
 
+  async function createContact(data) {
+    data.customerId = customerId;
+    try {
+      await api.post("/contacts", data);
+      toast.success("Contact created successfully!");
+      setCreateContactModal(false);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    }
+  }
+
   return (
     <CustomerContext.Provider
       value={{
@@ -61,6 +74,9 @@ export const CustomerProvider = ({ children }) => {
         updateCustomer,
         editModal,
         setEditModal,
+        createContactModal,
+        setCreateContactModal,
+        createContact,
       }}
     >
       {children}

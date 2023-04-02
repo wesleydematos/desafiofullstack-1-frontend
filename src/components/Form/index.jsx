@@ -13,7 +13,7 @@ export const Form = ({ typeRequest, typeData, handleFunction }) => {
     resolver: yupResolver(createSchema),
   });
 
-  const { setEditModal } = useCustomerContext();
+  const { setEditModal, setCreateContactModal } = useCustomerContext();
 
   return (
     <FormStyled>
@@ -53,9 +53,17 @@ export const Form = ({ typeRequest, typeData, handleFunction }) => {
             <p className="error">{errors.phoneNumber.message}</p>
           )}
         </fieldset>
-        {typeRequest == "Update" ? (
+        {typeRequest == "Update" ||
+        (typeData == "Contact" && typeRequest == "Create") ? (
           <div className="btns">
-            <button type="button" onClick={() => setEditModal(false)}>
+            <button
+              type="button"
+              onClick={() => {
+                typeData == "Contact"
+                  ? setCreateContactModal(false)
+                  : setEditModal(false);
+              }}
+            >
               X
             </button>
             <button type="submit">{typeRequest}</button>
