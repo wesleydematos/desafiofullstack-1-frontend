@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Header } from "../../components/Header";
 import { ModalDelete } from "../../components/ModalDelete";
+import { ModalEdit } from "../../components/ModalEdit";
 import { useCustomerContext } from "../../contexts/customerContext";
 import api from "../../services/api";
 import { CustomersStyled } from "./style";
@@ -15,6 +16,8 @@ export const Customers = () => {
     setCustomerId,
     customerId,
     deleteCustomer,
+    setEditModal,
+    editModal,
   } = useCustomerContext();
 
   useEffect(() => {
@@ -37,6 +40,7 @@ export const Customers = () => {
           deleteFunction={deleteCustomer}
         />
       )}
+      {editModal && <ModalEdit />}
       <Header />
       <CustomersStyled>
         {!customers.length ? (
@@ -52,7 +56,14 @@ export const Customers = () => {
                 <p>Phone Number: {customer.phoneNumber}</p>
                 <p>Register Date: {customer.register_date.slice(0, 10)}</p>
                 <div className="buttons">
-                  <button>Edit</button>
+                  <button
+                    onClick={() => {
+                      setCustomerId(customer.id);
+                      setEditModal(!editModal);
+                    }}
+                  >
+                    Edit
+                  </button>
                   <button
                     onClick={() => {
                       setCustomerId(customer.id);

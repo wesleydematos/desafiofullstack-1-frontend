@@ -9,6 +9,7 @@ export const CustomerProvider = ({ children }) => {
   const [customers, setCustomers] = useState([]);
   const [customerId, setCustomerId] = useState("");
   const [deleteModal, setDeleteModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
 
   async function registerCustomer(data) {
     try {
@@ -32,6 +33,18 @@ export const CustomerProvider = ({ children }) => {
     }
   }
 
+  async function updateCustomer(data) {
+    try {
+      await api.patch(`/customers/${customerId}`, data);
+      toast.success("Customer successfully edited!");
+      setEditModal(false);
+      setChangeLi(!changeLi);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    }
+  }
+
   return (
     <CustomerContext.Provider
       value={{
@@ -45,6 +58,9 @@ export const CustomerProvider = ({ children }) => {
         deleteModal,
         setDeleteModal,
         deleteCustomer,
+        updateCustomer,
+        editModal,
+        setEditModal,
       }}
     >
       {children}

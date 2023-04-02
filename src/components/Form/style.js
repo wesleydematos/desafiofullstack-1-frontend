@@ -35,6 +35,13 @@ export const FormStyled = styled.div`
       }
     }
 
+    .btns {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 25%;
+      width: 80%;
+    }
+
     @media (min-width: 1024px) {
       width: 600px;
     }

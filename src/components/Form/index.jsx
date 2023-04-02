@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createSchema, updateSchema } from "../../schemas";
+import { createSchema } from "../../schemas";
 import { FormStyled } from "./style";
+import { useCustomerContext } from "../../contexts/customerContext";
 
 export const Form = ({ typeRequest, typeData, handleFunction }) => {
   const {
@@ -9,10 +10,10 @@ export const Form = ({ typeRequest, typeData, handleFunction }) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(
-      typeRequest == "Create" ? createSchema : updateSchema
-    ),
+    resolver: yupResolver(createSchema),
   });
+
+  const { setEditModal } = useCustomerContext();
 
   return (
     <FormStyled>
@@ -52,7 +53,16 @@ export const Form = ({ typeRequest, typeData, handleFunction }) => {
             <p className="error">{errors.phoneNumber.message}</p>
           )}
         </fieldset>
-        <button type="submit">{typeRequest}</button>
+        {typeRequest == "Update" ? (
+          <div className="btns">
+            <button type="button" onClick={() => setEditModal(false)}>
+              X
+            </button>
+            <button type="submit">{typeRequest}</button>
+          </div>
+        ) : (
+          <button type="submit">{typeRequest}</button>
+        )}
       </form>
     </FormStyled>
   );
