@@ -1,10 +1,21 @@
 import { useEffect } from "react";
 import { Header } from "../../components/Header";
+import { ModalDelete } from "../../components/ModalDelete";
 import { useCustomerContext } from "../../contexts/customerContext";
 import api from "../../services/api";
+import { CustomersStyled } from "./style";
 
 export const Customers = () => {
-  const { setCustomers, changeLi, customers } = useCustomerContext();
+  const {
+    setCustomers,
+    changeLi,
+    customers,
+    deleteModal,
+    setDeleteModal,
+    setCustomerId,
+    customerId,
+    deleteCustomer,
+  } = useCustomerContext();
 
   useEffect(() => {
     api
@@ -19,27 +30,45 @@ export const Customers = () => {
 
   return (
     <>
-      <Header />
-      {!customers.length ? (
-        <div className="without_customers">
-          <p>No contact created yet :/</p>
-        </div>
-      ) : (
-        <ul>
-          {customers.map((customer) => (
-            <li key={customer.id}>
-              <p>Name: {customer.name}</p>
-              <p>Email: {customer.email}</p>
-              <p>Phone Number: {customer.phoneNumber}</p>
-              <p>Register Date: {customer.register_date}</p>
-              <button>Edit</button>
-              <button>Delete</button>
-              <button>Create contact</button>
-              <button>List contacts</button>
-            </li>
-          ))}
-        </ul>
+      {deleteModal && (
+        <ModalDelete
+          typeRequest={"Customer"}
+          idToDelete={customerId}
+          deleteFunction={deleteCustomer}
+        />
       )}
+      <Header />
+      <CustomersStyled>
+        {!customers.length ? (
+          <div className="without_customers">
+            <p>No costumers created yet :/</p>
+          </div>
+        ) : (
+          <ul>
+            {customers.map((customer) => (
+              <li key={customer.id}>
+                <h1>Customer {customer.name}</h1>
+                <p>Email: {customer.email}</p>
+                <p>Phone Number: {customer.phoneNumber}</p>
+                <p>Register Date: {customer.register_date.slice(0, 10)}</p>
+                <div className="buttons">
+                  <button>Edit</button>
+                  <button
+                    onClick={() => {
+                      setCustomerId(customer.id);
+                      setDeleteModal(!deleteModal);
+                    }}
+                  >
+                    Delete
+                  </button>
+                  <button>Create contact</button>
+                  <button>List contacts</button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </CustomersStyled>
     </>
   );
 };
