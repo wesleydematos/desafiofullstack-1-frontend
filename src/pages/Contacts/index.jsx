@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "../../components/Header";
+import { ModalDelete } from "../../components/ModalDelete";
+import { ModalEdit } from "../../components/ModalEdit";
 import { useCustomerContext } from "../../contexts/customerContext";
 
 export const Contacts = () => {
-  const { getContactsById, contacts } = useCustomerContext();
+  const { getContactsById, contacts, deleteModal, editModal, deleteContact } =
+    useCustomerContext();
 
   useEffect(() => {
     getContactsById();
   }, []);
-
-  console.log(contacts);
 
   return (
     <div>
@@ -24,9 +25,27 @@ export const Contacts = () => {
           </p>
         </div>
       ) : (
-        <>
-          <p>oo</p>
-        </>
+        <ul>
+          {contacts.contacts.map((contact) => {
+            <li key={contact.id}>
+              {deleteModal && (
+                <ModalDelete
+                  typeRequest={"Customer"}
+                  idToDelete={contact.id}
+                  deleteFunction={deleteContact(contact.id)}
+                />
+              )}
+              {editModal && <ModalEdit />}
+              <p>Name: {contact.name}</p>
+              <p>Email: {contact.email}</p>
+              <p>Phone Number: {contact.phoneNumber}</p>
+              <div>
+                <button>Delete</button>
+                <button>Edit</button>
+              </div>
+            </li>;
+          })}
+        </ul>
       )}
     </div>
   );

@@ -70,6 +70,17 @@ export const CustomerProvider = ({ children }) => {
     }
   }
 
+  async function deleteContact(id) {
+    try {
+      await api.delete(`/contacts/${id}`);
+      toast.success("Contact deleted successfully!");
+      setDeleteModal(false);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    }
+  }
+
   return (
     <CustomerContext.Provider
       value={{
@@ -92,6 +103,7 @@ export const CustomerProvider = ({ children }) => {
         contacts,
         setContacts,
         getContactsById,
+        deleteContact,
       }}
     >
       {children}
