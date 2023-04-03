@@ -11,6 +11,7 @@ export const CustomerProvider = ({ children }) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [createContactModal, setCreateContactModal] = useState(false);
+  const [contacts, setContacts] = useState({});
 
   async function registerCustomer(data) {
     try {
@@ -58,6 +59,17 @@ export const CustomerProvider = ({ children }) => {
     }
   }
 
+  async function getContactsById() {
+    try {
+      const id = localStorage.getItem("idUser");
+      const { data } = await api.get(`/contacts/${id}`);
+      setContacts(data);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    }
+  }
+
   return (
     <CustomerContext.Provider
       value={{
@@ -77,6 +89,9 @@ export const CustomerProvider = ({ children }) => {
         createContactModal,
         setCreateContactModal,
         createContact,
+        contacts,
+        setContacts,
+        getContactsById,
       }}
     >
       {children}

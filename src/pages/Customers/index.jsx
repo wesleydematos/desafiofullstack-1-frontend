@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { ModalCreateContact } from "../../components/ModalCreateContact";
 import { ModalDelete } from "../../components/ModalDelete";
@@ -85,7 +86,15 @@ export const Customers = () => {
                   >
                     Create contact
                   </button>
-                  <button>List contacts</button>
+                  <Link
+                    onClick={() => {
+                      setCustomerId(customer.id);
+                      localStorage.setItem("idUser", customer.id);
+                    }}
+                    to="/contacts"
+                  >
+                    List Contacts
+                  </Link>
                 </div>
               </li>
             ))}
